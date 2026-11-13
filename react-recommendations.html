@@ -1,0 +1,765 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prabhat Vachan - Reading Recommendations (ReactJS)</title>
+    <link rel="icon" type="image/svg+xml" href="images/logo.svg">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Devanagari:wght@400;700&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+    <!-- React CDN -->
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <style>
+        /* ===== React Page Specific Styles ===== */
+        .react-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: linear-gradient(135deg, #61DAFB, #21a1c9);
+            color: #20232a;
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            box-shadow: 0 3px 10px rgba(97, 218, 251, 0.3);
+        }
+
+        .react-badge i {
+            animation: spin 4s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .page-hero-react {
+            background: linear-gradient(135deg, rgba(32, 35, 42, 0.95), rgba(139, 0, 0, 0.85)), url('images/pattern.png');
+            color: white;
+            padding: 60px 0 50px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .page-hero-react::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(to right, #61DAFB, var(--primary-color), var(--secondary-color), #61DAFB);
+            background-size: 200% 100%;
+            animation: gradientShift 3s ease infinite;
+        }
+
+        @keyframes gradientShift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        .page-hero-react h2 {
+            color: white;
+            font-size: 2.8rem;
+            margin-bottom: 10px;
+        }
+
+        .page-hero-react p {
+            color: rgba(255,255,255,0.85);
+            font-size: 1.15rem;
+        }
+
+        /* Mood Selector */
+        .mood-section {
+            padding: 40px 0 10px;
+        }
+
+        .mood-title {
+            text-align: center;
+            font-size: 1.5rem;
+            color: var(--secondary-color);
+            margin-bottom: 25px;
+        }
+
+        .mood-grid {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 10px;
+        }
+
+        .mood-card {
+            background: white;
+            border: 2px solid var(--border-color);
+            border-radius: 16px;
+            padding: 20px 28px;
+            cursor: pointer;
+            transition: all 0.35s ease;
+            text-align: center;
+            min-width: 140px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .mood-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+            transform: scaleX(0);
+            transition: transform 0.3s;
+        }
+
+        .mood-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+            border-color: var(--primary-color);
+        }
+
+        .mood-card:hover::before,
+        .mood-card.active::before {
+            transform: scaleX(1);
+        }
+
+        .mood-card.active {
+            border-color: var(--primary-color);
+            background: linear-gradient(135deg, rgba(184, 134, 11, 0.08), rgba(139, 0, 0, 0.05));
+            box-shadow: 0 5px 20px rgba(184, 134, 11, 0.15);
+        }
+
+        .mood-card .emoji {
+            font-size: 2.2rem;
+            margin-bottom: 8px;
+            display: block;
+        }
+
+        .mood-card .mood-label {
+            font-weight: 700;
+            color: var(--secondary-color);
+            font-size: 0.95rem;
+        }
+
+        /* Recommendations Grid */
+        .reco-section {
+            padding: 35px 0 50px;
+        }
+
+        .reco-section-title {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .reco-section-title h3 {
+            font-size: 1.6rem;
+            color: var(--secondary-color);
+        }
+
+        .reco-section-title .shuffle-btn {
+            background: linear-gradient(135deg, var(--secondary-color), var(--primary-color));
+            color: white;
+            border: none;
+            padding: 10px 22px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 700;
+            font-family: var(--font-body);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s;
+        }
+
+        .reco-section-title .shuffle-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(139, 0, 0, 0.3);
+        }
+
+        .reco-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
+        }
+
+        .reco-card {
+            background: white;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.07);
+            border: 1px solid var(--border-color);
+            transition: all 0.35s ease;
+            position: relative;
+        }
+
+        .reco-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 12px 35px rgba(0,0,0,0.12);
+        }
+
+        .reco-card-top {
+            background: linear-gradient(135deg, var(--secondary-color), var(--primary-color));
+            padding: 25px;
+            color: white;
+            position: relative;
+        }
+
+        .reco-card-top .match-score {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: rgba(255,255,255,0.2);
+            backdrop-filter: blur(10px);
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 700;
+        }
+
+        .reco-card-top h4 {
+            color: white;
+            font-size: 1.3rem;
+            margin-bottom: 5px;
+        }
+
+        .reco-card-top .reco-author {
+            opacity: 0.85;
+            font-size: 0.9rem;
+        }
+
+        .reco-card-body {
+            padding: 22px;
+        }
+
+        .reco-reason {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            background: rgba(184, 134, 11, 0.06);
+            padding: 12px 15px;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            font-size: 0.9rem;
+            color: #555;
+            line-height: 1.5;
+        }
+
+        .reco-reason i {
+            color: var(--primary-color);
+            margin-top: 3px;
+            flex-shrink: 0;
+        }
+
+        .reco-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 18px;
+        }
+
+        .reco-tag {
+            background: var(--accent-color);
+            color: var(--secondary-color);
+            padding: 4px 12px;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .reco-card-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn-add-list {
+            flex: 1;
+            padding: 10px;
+            border: 2px solid var(--primary-color);
+            background: white;
+            color: var(--primary-color);
+            border-radius: 10px;
+            font-weight: 700;
+            cursor: pointer;
+            font-family: var(--font-body);
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+        }
+
+        .btn-add-list:hover {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .btn-add-list.added {
+            background: #10b981;
+            border-color: #10b981;
+            color: white;
+        }
+
+        .btn-read-now {
+            flex: 1;
+            padding: 10px;
+            background: linear-gradient(135deg, var(--secondary-color), var(--primary-color));
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-weight: 700;
+            cursor: pointer;
+            font-family: var(--font-body);
+            transition: all 0.3s;
+        }
+
+        .btn-read-now:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(139, 0, 0, 0.3);
+        }
+
+        /* Reading List Sidebar */
+        .reading-list-panel {
+            background: white;
+            border-radius: 16px;
+            padding: 25px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            border: 1px solid var(--border-color);
+            margin-top: 30px;
+        }
+
+        .reading-list-panel h3 {
+            font-size: 1.4rem;
+            color: var(--secondary-color);
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .reading-list-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 15px;
+            border-radius: 10px;
+            margin-bottom: 10px;
+            background: rgba(245, 222, 179, 0.2);
+            border: 1px solid rgba(212, 165, 116, 0.3);
+            transition: all 0.3s;
+        }
+
+        .reading-list-item:hover {
+            background: rgba(245, 222, 179, 0.4);
+        }
+
+        .reading-list-item .item-info h4 {
+            color: var(--secondary-color);
+            font-size: 1rem;
+            margin-bottom: 2px;
+        }
+
+        .reading-list-item .item-info span {
+            color: var(--primary-color);
+            font-size: 0.85rem;
+        }
+
+        .reading-list-item .remove-btn {
+            background: none;
+            border: none;
+            color: #ccc;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: color 0.3s;
+            padding: 5px;
+        }
+
+        .reading-list-item .remove-btn:hover {
+            color: var(--secondary-color);
+        }
+
+        .empty-list {
+            text-align: center;
+            color: #999;
+            padding: 30px 10px;
+        }
+
+        .empty-list i {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            color: var(--border-color);
+        }
+
+        /* Fade animation */
+        .fade-in {
+            animation: fadeIn 0.5s ease forwards;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .page-hero-react h2 { font-size: 2rem; }
+            .mood-card { min-width: 110px; padding: 15px 18px; }
+            .mood-card .emoji { font-size: 1.8rem; }
+            .reco-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <div class="logo-section">
+                <img src="images/logo.svg" alt="Prabhat Vachan sunrise and open book emblem" class="logo">
+                <div class="logo-text">
+                    <h1 class="hindi-font">प्रभात वचन</h1>
+                    <p>Cultural Literature Portal</p>
+                </div>
+            </div>
+            
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="dashboard.html"><i class="fas fa-home"></i> Home</a></li>
+                    <li><a href="shop.html"><i class="fas fa-shopping-cart"></i> Shop</a></li>
+                    <li><a href="angular-reviews.html"><i class="fab fa-angular"></i> Reviews</a></li>
+                    <li><a href="react-recommendations.html" class="active"><i class="fab fa-react"></i> For You</a></li>
+                </ul>
+            </nav>
+            
+            <div class="user-section">
+                <span class="user-name" data-user-name>Welcome, Reader!</span>
+                <button type="button" class="logout-btn" data-logout aria-label="Log out" title="Log out"><i class="fas fa-sign-out-alt"></i></button>
+            </div>
+        </div>
+    </header>
+
+    
+    <!-- React App Root -->
+    <div id="react-root"></div>
+
+    
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4 class="hindi-font">प्रभात वचन</h4>
+                    <p>Preserving cultural literature for future generations through digital innovation.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="dashboard.html">Home</a></li>
+                        <li><a href="shop.html">Shop</a></li>
+                        <li><a href="angular-reviews.html">Reviews</a></li>
+                        <li><a href="react-recommendations.html">Recommendations </a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Connect With Us</h4>
+                    <div class="social-links">
+                        <a href="https://www.facebook.com/login.php"><i class="fab fa-facebook"></i></a>
+                        <a href="https://x.com/?lang=en-in"><i class="fab fa-twitter"></i></a>
+                        <a href="https://www.instagram.com/#"><i class="fab fa-instagram"></i></a>
+                        <a href="https://www.youtube.com/"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p> 2026 Prabhat Vachan. All rights reserved.
+            </div>
+        </div>
+    </footer>
+
+    <!-- React Application -->
+    <script type="text/babel">
+        const { useState, useCallback, useMemo } = React;
+
+        // ===== Data =====
+        const allBooks = [
+            {
+                id: 1, title: 'रामायण (Ramayana)', author: 'Valmiki',
+                tags: ['Epic', 'Spiritual', 'Dharma'],
+                moods: ['inspired', 'spiritual', 'adventurous'],
+                reason: 'An eternal epic about duty, love, and the victory of righteousness. Perfect for when you seek courage and moral clarity.',
+                matchScore: 98
+            },
+            {
+                id: 2, title: 'महाभारत (Mahabharata)', author: 'Vyasa',
+                tags: ['Epic', 'Philosophy', 'War'],
+                moods: ['curious', 'adventurous', 'reflective'],
+                reason: 'The greatest epic ever told, covering every aspect of human nature, politics, and philosophy.',
+                matchScore: 95
+            },
+            {
+                id: 3, title: 'गीतांजलि (Gitanjali)', author: 'Rabindranath Tagore',
+                tags: ['Poetry', 'Spiritual', 'Nobel Prize'],
+                moods: ['peaceful', 'spiritual', 'reflective'],
+                reason: 'Tagore\'s Nobel Prize-winning poetry collection that speaks directly to the soul with divine beauty.',
+                matchScore: 92
+            },
+            {
+                id: 4, title: 'वेद (Vedas)', author: 'Ancient Sages',
+                tags: ['Spiritual', 'Sacred', 'Philosophy'],
+                moods: ['spiritual', 'curious', 'reflective'],
+                reason: 'The oldest scriptures of humankind, containing timeless wisdom about life, nature, and the divine.',
+                matchScore: 90
+            },
+            {
+                id: 5, title: 'शिवचरित्र (Shivcharitra)', author: 'Sir Jadunath Sarkar',
+                tags: ['Historical', 'Biography', 'Maratha'],
+                moods: ['inspired', 'adventurous', 'curious'],
+                reason: 'The heroic biography of Chhatrapati Shivaji Maharaj — a story of vision, strategy, and unmatched bravery.',
+                matchScore: 96
+            },
+            {
+                id: 6, title: 'दासबोध (Dasbodh)', author: 'Samarth Ramdas',
+                tags: ['Philosophy', 'Self-Help', 'Spiritual'],
+                moods: ['reflective', 'peaceful', 'spiritual'],
+                reason: 'A masterwork of practical spirituality and life guidance by the great saint Samarth Ramdas.',
+                matchScore: 88
+            },
+            {
+                id: 7, title: 'पंचतंत्र (Panchatantra)', author: 'Vishnu Sharma',
+                tags: ['Fables', 'Wisdom', 'Classic'],
+                moods: ['curious', 'peaceful', 'reflective'],
+                reason: 'Timeless animal fables that teach profound life lessons through captivating stories.',
+                matchScore: 85
+            },
+            {
+                id: 8, title: 'अर्थशास्त्र (Arthashastra)', author: 'Kautilya (Chanakya)',
+                tags: ['Politics', 'Economics', 'Strategy'],
+                moods: ['curious', 'inspired', 'adventurous'],
+                reason: 'Chanakya\'s treatise on statecraft, economics, and military strategy — brilliance for the ambitious mind.',
+                matchScore: 91
+            },
+            {
+                id: 9, title: 'मेघदूत (Meghaduta)', author: 'Kalidasa',
+                tags: ['Poetry', 'Romance', 'Classic'],
+                moods: ['peaceful', 'reflective', 'spiritual'],
+                reason: 'Kalidasa\'s lyrical poem of a cloud messenger carrying love across the sky — pure literary beauty.',
+                matchScore: 87
+            }
+        ];
+
+        const moods = [
+            { id: 'inspired', emoji: '🔥', label: 'Inspired' },
+            { id: 'peaceful', emoji: '🕊️', label: 'Peaceful' },
+            { id: 'curious', emoji: '🧠', label: 'Curious' },
+            { id: 'spiritual', emoji: '🪷', label: 'Spiritual' },
+            { id: 'adventurous', emoji: '⚔️', label: 'Adventurous' },
+            { id: 'reflective', emoji: '🌙', label: 'Reflective' }
+        ];
+
+        // ===== Components =====
+
+        function MoodSelector({ selectedMood, onMoodChange }) {
+            return (
+                <div className="mood-section">
+                    <div className="container">
+                        <h3 className="mood-title">
+                            <i className="fas fa-sparkles" style={{color: 'var(--primary-color)'}}></i>
+                            {' '}How are you feeling today?
+                        </h3>
+                        <div className="mood-grid">
+                            {moods.map(mood => (
+                                <div
+                                    key={mood.id}
+                                    className={`mood-card ${selectedMood === mood.id ? 'active' : ''}`}
+                                    onClick={() => onMoodChange(mood.id === selectedMood ? null : mood.id)}
+                                >
+                                    <span className="emoji">{mood.emoji}</span>
+                                    <span className="mood-label">{mood.label}</span>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                </div>
+            );
+        }
+
+        function RecommendationCard({ book, onAddToList, isInList }) {
+            return (
+                <div className="reco-card fade-in">
+                    <div className="reco-card-top">
+                        <span className="match-score">
+                            <i className="fas fa-bullseye"></i> {book.matchScore}% Match
+                        </span>
+                        <h4>{book.title}</h4>
+                        <span className="reco-author">by {book.author}</span>
+                    </div>
+                    <div className="reco-card-body">
+                        <div className="reco-reason">
+                            <i className="fas fa-lightbulb"></i>
+                            <span>{book.reason}</span>
+                        </div>
+                        <div className="reco-tags">
+                            {book.tags.map(tag => (
+                                <span key={tag} className="reco-tag">{tag}</span>
+                            ))}
+                        </div>
+                        <div className="reco-card-actions">
+                            <button
+                                className={`btn-add-list ${isInList ? 'added' : ''}`}
+                                onClick={() => onAddToList(book)}
+                            >
+                                <i className={`fas ${isInList ? 'fa-check' : 'fa-plus'}`}></i>
+                                {isInList ? 'Added' : 'Add to List'}
+                            </button>
+                            <button className="btn-read-now" onClick={() => window.location.href = 'reader.html'}>
+                                <i className="fas fa-book-reader"></i> Read
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            );
+        }
+
+        function ReadingList({ items, onRemove }) {
+            return (
+                <div className="reading-list-panel">
+                    <h3>
+                        <i className="fas fa-bookmark" style={{color: 'var(--primary-color)'}}></i>
+                        My Reading List ({items.length})
+                    </h3>
+                    {items.length === 0 ? (
+                        <div className="empty-list">
+                            <i className="fas fa-book-open"></i>
+                            <p>Your reading list is empty.<br/>Add books from recommendations!</p>
+                        </div>
+                    ) : (
+                        items.map(item => (
+                            <div key={item.id} className="reading-list-item fade-in">
+                                <div className="item-info">
+                                    <h4>{item.title}</h4>
+                                    <span>{item.author}</span>
+                                </div>
+                                <button className="remove-btn" onClick={() => onRemove(item.id)} title="Remove">
+                                    <i className="fas fa-times"></i>
+                                </button>
+                            </div>
+                        ))
+                    )}
+                </div>
+            );
+        }
+
+        // ===== Main App =====
+        function App() {
+            const [selectedMood, setSelectedMood] = useState(null);
+            const [readingList, setReadingList] = useState([]);
+            const [shuffleKey, setShuffleKey] = useState(0);
+
+            const filteredBooks = useMemo(() => {
+                let books = [...allBooks];
+                if (selectedMood) {
+                    books = books.filter(b => b.moods.includes(selectedMood));
+                    // Sort by match score
+                    books.sort((a, b) => b.matchScore - a.matchScore);
+                }
+                // Shuffle effect
+                if (shuffleKey > 0 && !selectedMood) {
+                    books.sort(() => Math.random() - 0.5);
+                }
+                return books;
+            }, [selectedMood, shuffleKey]);
+
+            const handleAddToList = useCallback((book) => {
+                setReadingList(prev => {
+                    const exists = prev.find(b => b.id === book.id);
+                    if (exists) {
+                        return prev.filter(b => b.id !== book.id);
+                    }
+                    return [...prev, book];
+                });
+            }, []);
+
+            const handleRemoveFromList = useCallback((bookId) => {
+                setReadingList(prev => prev.filter(b => b.id !== bookId));
+            }, []);
+
+            const isInList = useCallback((bookId) => {
+                return readingList.some(b => b.id === bookId);
+            }, [readingList]);
+
+            const moodLabel = selectedMood
+                ? moods.find(m => m.id === selectedMood)?.label
+                : null;
+
+            return (
+                <React.Fragment>
+                    <MoodSelector
+                        selectedMood={selectedMood}
+                        onMoodChange={setSelectedMood}
+                    />
+
+                    <main className="reco-section">
+                        <div className="container">
+                            <div className="reco-section-title">
+                                <h3>
+                                    {selectedMood
+                                        ? `${moods.find(m => m.id === selectedMood)?.emoji} Books for your "${moodLabel}" mood`
+                                        : '📚 All Recommendations'}
+                                    <span style={{
+                                        fontSize: '1rem',
+                                        fontWeight: 400,
+                                        color: '#999',
+                                        marginLeft: '10px'
+                                    }}>
+                                        ({filteredBooks.length} books)
+                                    </span>
+                                </h3>
+                                <button className="shuffle-btn" onClick={() => { setSelectedMood(null); setShuffleKey(k => k + 1); }}>
+                                    <i className="fas fa-random"></i> Shuffle
+                                </button>
+                            </div>
+
+                            <div className="reco-grid">
+                                {filteredBooks.map(book => (
+                                    <RecommendationCard
+                                        key={book.id}
+                                        book={book}
+                                        onAddToList={handleAddToList}
+                                        isInList={isInList(book.id)}
+                                    />
+                                ))}
+                            </div>
+
+                            {filteredBooks.length === 0 && (
+                                <div className="empty-list" style={{padding: '60px 20px'}}>
+                                    <i className="fas fa-search" style={{display:'block', fontSize:'3rem', marginBottom:'15px', color:'var(--border-color)'}}></i>
+                                    <h3 style={{color: 'var(--secondary-color)'}}>No books match this mood yet</h3>
+                                    <p>Try selecting a different mood or click Shuffle!</p>
+                                </div>
+                            )}
+
+                            <ReadingList
+                                items={readingList}
+                                onRemove={handleRemoveFromList}
+                            />
+                        </div>
+                    </main>
+                </React.Fragment>
+            );
+        }
+
+        // Render
+        const root = ReactDOM.createRoot(document.getElementById('react-root'));
+        root.render(<App />);
+    </script>
+    <script src="js/script.js"></script>
+</body>
+</html>

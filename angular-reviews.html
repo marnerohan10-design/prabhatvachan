@@ -1,0 +1,797 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="prabhatReviews">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prabhat Vachan - Book Reviews (AngularJS)</title>
+    <link rel="icon" type="image/svg+xml" href="images/logo.svg">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Devanagari:wght@400;700&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+    <!-- AngularJS CDN -->
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+    <style>
+        /* ===== AngularJS Page Specific Styles ===== */
+        .angularjs-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: linear-gradient(135deg, #DD0031, #C3002F);
+            color: white;
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            box-shadow: 0 3px 10px rgba(221, 0, 49, 0.3);
+            animation: pulseGlow 2s ease-in-out infinite;
+        }
+
+        @keyframes pulseGlow {
+            0%, 100% { box-shadow: 0 3px 10px rgba(221, 0, 49, 0.3); }
+            50% { box-shadow: 0 3px 20px rgba(221, 0, 49, 0.5); }
+        }
+
+        .page-hero {
+            background: linear-gradient(135deg, rgba(139, 0, 0, 0.9), rgba(184, 134, 11, 0.8)), url('images/pattern.png');
+            color: white;
+            padding: 60px 0 50px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .page-hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.05) 0%, transparent 60%);
+            animation: rotateGlow 15s linear infinite;
+        }
+
+        @keyframes rotateGlow {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .page-hero h2 {
+            color: white;
+            font-size: 2.8rem;
+            margin-bottom: 10px;
+            position: relative;
+        }
+
+        .page-hero p {
+            color: rgba(255,255,255,0.85);
+            font-size: 1.15rem;
+            position: relative;
+        }
+
+        .reviews-section {
+            padding: 50px 0;
+        }
+
+        /* Search & Filter Bar */
+        .filter-bar {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 35px;
+            align-items: center;
+            background: white;
+            padding: 20px 25px;
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            border: 1px solid var(--border-color);
+        }
+
+        .filter-bar input[type="text"] {
+            flex: 1;
+            min-width: 220px;
+            padding: 12px 18px;
+            border: 2px solid var(--border-color);
+            border-radius: 10px;
+            font-family: var(--font-body);
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+
+        .filter-bar input[type="text"]:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(184, 134, 11, 0.15);
+        }
+
+        .filter-bar select {
+            padding: 12px 18px;
+            border: 2px solid var(--border-color);
+            border-radius: 10px;
+            font-family: var(--font-body);
+            font-size: 1rem;
+            background: white;
+            cursor: pointer;
+            min-width: 160px;
+            transition: border-color 0.3s;
+        }
+
+        .filter-bar select:focus {
+            outline: none;
+            border-color: var(--primary-color);
+        }
+
+        /* Stats Bar */
+        .stats-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .stats-bar .result-count {
+            font-weight: 600;
+            color: var(--secondary-color);
+            font-size: 1.05rem;
+        }
+
+        .stats-bar .sort-btn {
+            padding: 8px 18px;
+            border: 2px solid var(--border-color);
+            background: white;
+            border-radius: 8px;
+            cursor: pointer;
+            font-family: var(--font-body);
+            font-weight: 600;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .stats-bar .sort-btn:hover {
+            border-color: var(--primary-color);
+            color: var(--primary-color);
+        }
+
+        /* Review Cards */
+        .review-card {
+            background: white;
+            border-radius: 16px;
+            padding: 28px;
+            margin-bottom: 22px;
+            box-shadow: 0 3px 15px rgba(0,0,0,0.07);
+            border: 1px solid var(--border-color);
+            transition: all 0.35s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .review-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: linear-gradient(to bottom, var(--primary-color), var(--secondary-color));
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .review-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 30px rgba(0,0,0,0.12);
+        }
+
+        .review-card:hover::before {
+            opacity: 1;
+        }
+
+        .review-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 14px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .review-book-info {
+            flex: 1;
+        }
+
+        .review-book-info h3 {
+            font-size: 1.35rem;
+            color: var(--secondary-color);
+            margin-bottom: 4px;
+        }
+
+        .review-book-info .reviewer {
+            color: var(--primary-color);
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+
+        .review-rating {
+            display: flex;
+            gap: 4px;
+        }
+
+        .review-rating .star {
+            color: #ddd;
+            font-size: 1.2rem;
+            transition: color 0.2s;
+        }
+
+        .review-rating .star.filled {
+            color: #f5a623;
+        }
+
+        .review-text {
+            color: #555;
+            line-height: 1.7;
+            margin-bottom: 16px;
+            font-size: 1rem;
+        }
+
+        .review-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .review-date {
+            color: #999;
+            font-size: 0.85rem;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .review-actions {
+            display: flex;
+            gap: 12px;
+        }
+
+        .review-actions button {
+            border: none;
+            background: none;
+            cursor: pointer;
+            color: #999;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            padding: 6px 12px;
+            border-radius: 6px;
+            transition: all 0.3s;
+            font-family: var(--font-body);
+        }
+
+        .review-actions button:hover {
+            background: rgba(184, 134, 11, 0.1);
+            color: var(--primary-color);
+        }
+
+        .review-actions button.liked {
+            color: var(--secondary-color);
+            background: rgba(139, 0, 0, 0.08);
+        }
+
+        /* Add Review Form */
+        .add-review-section {
+            background: white;
+            border-radius: 16px;
+            padding: 35px;
+            margin-top: 40px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            border: 1px solid var(--border-color);
+        }
+
+        .add-review-section h3 {
+            font-size: 1.6rem;
+            color: var(--secondary-color);
+            margin-bottom: 25px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .form-field {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-field label {
+            font-weight: 600;
+            color: var(--secondary-color);
+            margin-bottom: 8px;
+            font-size: 0.95rem;
+        }
+
+        .form-field input,
+        .form-field textarea,
+        .form-field select {
+            padding: 12px 16px;
+            border: 2px solid var(--border-color);
+            border-radius: 10px;
+            font-family: var(--font-body);
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+
+        .form-field input:focus,
+        .form-field textarea:focus,
+        .form-field select:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(184, 134, 11, 0.15);
+        }
+
+        .form-field textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        .star-rating-input {
+            display: flex;
+            gap: 8px;
+            margin-top: 5px;
+        }
+
+        .star-rating-input .star-btn {
+            background: none;
+            border: none;
+            font-size: 1.8rem;
+            color: #ddd;
+            cursor: pointer;
+            transition: all 0.2s;
+            padding: 0;
+        }
+
+        .star-rating-input .star-btn:hover,
+        .star-rating-input .star-btn.active {
+            color: #f5a623;
+            transform: scale(1.15);
+        }
+
+        .btn-submit-review {
+            background: linear-gradient(135deg, var(--secondary-color), var(--primary-color));
+            color: white;
+            border: none;
+            padding: 14px 35px;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 10px;
+        }
+
+        .btn-submit-review:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(139, 0, 0, 0.3);
+        }
+
+        /* Success Message */
+        .success-msg {
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: white;
+            padding: 14px 20px;
+            border-radius: 10px;
+            margin-top: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 600;
+            animation: slideIn 0.4s ease;
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: #999;
+        }
+
+        .empty-state i {
+            font-size: 3rem;
+            margin-bottom: 15px;
+            color: var(--border-color);
+        }
+
+        /* Category Tag for Reviews */
+        .review-category {
+            display: inline-block;
+            background: var(--accent-color);
+            color: var(--secondary-color);
+            padding: 4px 12px;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-left: 10px;
+        }
+
+        /* AngularJS Animation */
+        .ng-enter {
+            animation: fadeInUp 0.4s ease;
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .page-hero h2 { font-size: 2rem; }
+            .filter-bar { flex-direction: column; }
+            .form-row { grid-template-columns: 1fr; }
+            .review-header { flex-direction: column; }
+        }
+    </style>
+</head>
+<body ng-controller="ReviewsController">
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <div class="logo-section">
+                <img src="images/logo.svg" alt="Prabhat Vachan sunrise and open book emblem" class="logo">
+                <div class="logo-text">
+                    <h1 class="hindi-font">प्रभात वचन</h1>
+                    <p>Cultural Literature Portal</p>
+                </div>
+            </div>
+            
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="dashboard.html"><i class="fas fa-home"></i> Home</a></li>
+                    <li><a href="shop.html"><i class="fas fa-shopping-cart"></i> Shop</a></li>
+                    <li><a href="angular-reviews.html" class="active"><i class="fab fa-angular"></i> Reviews</a></li>
+                    <li><a href="react-recommendations.html"><i class="fab fa-react"></i> For You</a></li>
+                </ul>
+            </nav>
+            
+            <div class="user-section">
+                <span class="user-name" data-user-name>Welcome, Reader!</span>
+                <button type="button" class="logout-btn" data-logout aria-label="Log out" title="Log out"><i class="fas fa-sign-out-alt"></i></button>
+            </div>
+        </div>
+    </header>
+
+   
+    <!-- Main Content -->
+    <main class="reviews-section">
+        <div class="container">
+
+            <!-- Filter Bar (AngularJS two-way binding) -->
+            <div class="filter-bar">
+                <input type="text" ng-model="searchQuery" placeholder="🔍 Search reviews by book, reviewer, or text...">
+                <select ng-model="categoryFilter">
+                    <option value="">All Categories</option>
+                    <option value="Epic">Epics</option>
+                    <option value="Poetry">Poetry</option>
+                    <option value="Philosophy">Philosophy</option>
+                    <option value="Spiritual">Spiritual</option>
+                    <option value="Historical">Historical</option>
+                </select>
+                <select ng-model="ratingFilter">
+                    <option value="">All Ratings</option>
+                    <option value="5">⭐⭐⭐⭐⭐ (5)</option>
+                    <option value="4">⭐⭐⭐⭐ (4+)</option>
+                    <option value="3">⭐⭐⭐ (3+)</option>
+                </select>
+            </div>
+
+            <!-- Stats -->
+            <div class="stats-bar">
+                <span class="result-count">
+                    Showing {{(filteredReviews = (reviews | filter:searchQuery | filter:filterByCategory | filter:filterByRating)).length}} of {{reviews.length}} reviews
+                </span>
+                <button class="sort-btn" ng-click="toggleSort()">
+                    <i class="fas" ng-class="sortOrder === 'asc' ? 'fa-sort-amount-up' : 'fa-sort-amount-down'"></i>
+                    Sort by {{sortField === 'date' ? 'Date' : 'Rating'}}
+                </button>
+            </div>
+
+            <!-- Review Cards (AngularJS ng-repeat) -->
+            <div ng-repeat="review in filteredReviews | orderBy:sortField:sortReverse track by review.id" class="review-card">
+                <div class="review-header">
+                    <div class="review-book-info">
+                        <h3>
+                            {{review.bookTitle}}
+                            <span class="review-category">{{review.category}}</span>
+                        </h3>
+                        <span class="reviewer"><i class="fas fa-user-circle"></i> {{review.reviewer}}</span>
+                    </div>
+                    <div class="review-rating">
+                        <i ng-repeat="star in [1,2,3,4,5]" class="fas fa-star star" ng-class="{'filled': star <= review.rating}"></i>
+                    </div>
+                </div>
+                <p class="review-text">{{review.text}}</p>
+                <div class="review-footer">
+                    <span class="review-date"><i class="far fa-calendar-alt"></i> {{review.date}}</span>
+                    <div class="review-actions">
+                        <button ng-click="toggleLike(review)" ng-class="{'liked': review.liked}">
+                            <i class="fas fa-thumbs-up"></i> {{review.likes}}
+                        </button>
+                        <button ng-click="shareReview(review)">
+                            <i class="fas fa-share-alt"></i> Share
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Empty State -->
+            <div ng-if="filteredReviews.length === 0" class="empty-state">
+                <i class="fas fa-search"></i>
+                <h3>No reviews found</h3>
+                <p>Try adjusting your search or filter criteria</p>
+            </div>
+
+            <!-- Add Review Form (AngularJS form handling) -->
+            <div class="add-review-section">
+                <h3><i class="fas fa-pen-fancy"></i> Write a Review</h3>
+                <form ng-submit="submitReview()" name="reviewForm">
+                    <div class="form-row">
+                        <div class="form-field">
+                            <label>Book Title</label>
+                            <select ng-model="newReview.bookTitle" required>
+                                <option value="">Select a book...</option>
+                                <option value="रामायण (Ramayana)">रामायण (Ramayana)</option>
+                                <option value="महाभारत (Mahabharata)">महाभारत (Mahabharata)</option>
+                                <option value="गीतांजलि (Gitanjali)">गीतांजलि (Gitanjali)</option>
+                                <option value="वेद (Vedas)">वेद (Vedas)</option>
+                                <option value="शिवचरित्र (Shivcharitra)">शिवचरित्र (Shivcharitra)</option>
+                                <option value="दासबोध (Dasbodh)">दासबोध (Dasbodh)</option>
+                            </select>
+                        </div>
+                        <div class="form-field">
+                            <label>Your Name</label>
+                            <input type="text" ng-model="newReview.reviewer" placeholder="Enter your name" required>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-field">
+                            <label>Category</label>
+                            <select ng-model="newReview.category" required>
+                                <option value="">Select category...</option>
+                                <option value="Epic">Epic</option>
+                                <option value="Poetry">Poetry</option>
+                                <option value="Philosophy">Philosophy</option>
+                                <option value="Spiritual">Spiritual</option>
+                                <option value="Historical">Historical</option>
+                            </select>
+                        </div>
+                        <div class="form-field">
+                            <label>Rating</label>
+                            <div class="star-rating-input">
+                                <button type="button" ng-repeat="star in [1,2,3,4,5]" class="star-btn" ng-class="{'active': star <= newReview.rating}" ng-click="setNewRating(star)">★</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-field" style="margin-bottom: 20px;">
+                        <label>Your Review</label>
+                        <textarea ng-model="newReview.text" placeholder="Share your thoughts about this book..." required></textarea>
+                    </div>
+
+                    <button type="submit" class="btn-submit-review" ng-disabled="reviewForm.$invalid || !newReview.rating">
+                        <i class="fas fa-paper-plane"></i> Submit Review
+                    </button>
+
+                    <div ng-if="showSuccess" class="success-msg">
+                        <i class="fas fa-check-circle"></i> Your review has been submitted successfully!
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4 class="hindi-font">प्रभात वचन</h4>
+                    <p>Preserving cultural literature for future generations through digital innovation.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="dashboard.html">Home</a></li>
+                        <li><a href="shop.html">Shop</a></li>
+                        <li><a href="angular-reviews.html">Reviews </a></li>
+                        <li><a href="react-recommendations.html">Recommendations</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Connect With Us</h4>
+                    <div class="social-links">
+                        <a href="https://www.facebook.com/login.php"><i class="fab fa-facebook"></i></a>
+                        <a href="https://x.com/?lang=en-in"><i class="fab fa-twitter"></i></a>
+                        <a href="https://www.instagram.com/#"><i class="fab fa-instagram"></i></a>
+                        <a href="https://www.youtube.com/"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p> 2026 Prabhat Vachan. All rights reserved.             </div>
+        </div>
+    </footer>
+
+    <!-- AngularJS Application -->
+    <script>
+        var app = angular.module('prabhatReviews', []);
+
+        app.controller('ReviewsController', function($scope) {
+            // Initial reviews data
+            $scope.reviews = [
+                {
+                    id: 1,
+                    bookTitle: 'रामायण (Ramayana)',
+                    reviewer: 'Aarti Sharma',
+                    rating: 5,
+                    text: 'A timeless epic that teaches us about dharma, devotion, and the triumph of good over evil. The character of Lord Rama is an ideal for all ages. Every chapter fills the heart with reverence and wisdom.',
+                    category: 'Epic',
+                    date: '2026-03-15',
+                    likes: 24,
+                    liked: false
+                },
+                {
+                    id: 2,
+                    bookTitle: 'गीतांजलि (Gitanjali)',
+                    reviewer: 'Rohit Kulkarni',
+                    rating: 5,
+                    text: 'Tagore\'s poetry touches the deepest corners of the soul. Each poem is a prayer, a meditation, and a celebration of life. The spiritual depth in Gitanjali is unmatched in modern literature.',
+                    category: 'Poetry',
+                    date: '2026-03-12',
+                    likes: 18,
+                    liked: false
+                },
+                {
+                    id: 3,
+                    bookTitle: 'महाभारत (Mahabharata)',
+                    reviewer: 'Priya Deshmukh',
+                    rating: 4,
+                    text: 'The Mahabharata is not just a war story — it is a profound exploration of human nature, duty, and justice. The Bhagavad Gita within it alone is worth a lifetime of study.',
+                    category: 'Epic',
+                    date: '2026-03-10',
+                    likes: 31,
+                    liked: false
+                },
+                {
+                    id: 4,
+                    bookTitle: 'वेद (Vedas)',
+                    reviewer: 'Suresh Patil',
+                    rating: 5,
+                    text: 'The Vedas are the foundation of all Indian philosophy. Reading them gives a sense of connection to thousands of years of wisdom. The hymns are beautiful and the philosophical insights are extraordinary.',
+                    category: 'Spiritual',
+                    date: '2026-03-08',
+                    likes: 15,
+                    liked: false
+                },
+                {
+                    id: 5,
+                    bookTitle: 'शिवचरित्र (Shivcharitra)',
+                    reviewer: 'Manish Jadhav',
+                    rating: 5,
+                    text: 'An inspiring biography of Chhatrapati Shivaji Maharaj. Every page fills you with pride and admiration for his vision, courage, and leadership. A must-read for every Indian.',
+                    category: 'Historical',
+                    date: '2026-03-05',
+                    likes: 42,
+                    liked: false
+                },
+                {
+                    id: 6,
+                    bookTitle: 'दासबोध (Dasbodh)',
+                    reviewer: 'Kavita Mane',
+                    rating: 4,
+                    text: 'Samarth Ramdas has crafted a masterpiece of spiritual and practical guidance. Dasbodh covers everything from self-discipline to leadership, making it relevant even today.',
+                    category: 'Philosophy',
+                    date: '2026-03-01',
+                    likes: 20,
+                    liked: false
+                }
+            ];
+
+            // Sorting
+            $scope.sortField = 'date';
+            $scope.sortReverse = true;
+            $scope.sortOrder = 'desc';
+
+            $scope.toggleSort = function() {
+                if ($scope.sortField === 'date') {
+                    $scope.sortField = 'rating';
+                } else {
+                    $scope.sortField = 'date';
+                }
+                $scope.sortReverse = !$scope.sortReverse;
+                $scope.sortOrder = $scope.sortReverse ? 'desc' : 'asc';
+            };
+
+            // Filters
+            $scope.filterByCategory = function(review) {
+                if (!$scope.categoryFilter) return true;
+                return review.category === $scope.categoryFilter;
+            };
+
+            $scope.filterByRating = function(review) {
+                if (!$scope.ratingFilter) return true;
+                return review.rating >= parseInt($scope.ratingFilter);
+            };
+
+            // Like toggle
+            $scope.toggleLike = function(review) {
+                review.liked = !review.liked;
+                review.likes += review.liked ? 1 : -1;
+            };
+
+            // Share
+            $scope.shareReview = function(review) {
+                alert('📋 Review link copied!\n\n"' + review.bookTitle + '" reviewed by ' + review.reviewer);
+            };
+
+            // New review form
+            $scope.newReview = { rating: 0 };
+            $scope.showSuccess = false;
+
+            $scope.setNewRating = function(star) {
+                $scope.newReview.rating = star;
+            };
+
+            $scope.submitReview = function() {
+                if (!$scope.newReview.bookTitle || !$scope.newReview.reviewer || !$scope.newReview.text || !$scope.newReview.rating || !$scope.newReview.category) return;
+
+                var today = new Date();
+                var dateStr = today.getFullYear() + '-' + String(today.getMonth() + 1).padStart(2, '0') + '-' + String(today.getDate()).padStart(2, '0');
+
+                $scope.reviews.unshift({
+                    id: $scope.reviews.length + 1,
+                    bookTitle: $scope.newReview.bookTitle,
+                    reviewer: $scope.newReview.reviewer,
+                    rating: $scope.newReview.rating,
+                    text: $scope.newReview.text,
+                    category: $scope.newReview.category,
+                    date: dateStr,
+                    likes: 0,
+                    liked: false
+                });
+
+                $scope.newReview = { rating: 0 };
+                $scope.showSuccess = true;
+
+                setTimeout(function() {
+                    $scope.$apply(function() {
+                        $scope.showSuccess = false;
+                    });
+                }, 3000);
+            };
+        });
+    </script>
+    <script src="js/script.js"></script>
+</body>
+</html>

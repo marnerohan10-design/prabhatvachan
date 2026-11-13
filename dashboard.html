@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prabhat Vachan - Book Collection</title>
+    <link rel="icon" type="image/svg+xml" href="images/logo.svg">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Devanagari:wght@400;700&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <div class="logo-section">
+                <img src="images/logo.svg" alt="Prabhat Vachan sunrise and open book emblem" class="logo">
+                <div class="logo-text">
+                    <h1 class="hindi-font">प्रभात वचन</h1>
+                    <p>Cultural Literature Portal</p>
+                </div>
+            </div>
+            
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="dashboard.html" class="active"><i class="fas fa-home"></i> Home</a></li>
+                    <!-- <li><a href="#"><i class="fas fa-book-open"></i> My Library</a></li>-->
+                    <li><a href="shop.html"><i class="fas fa-shopping-cart"></i> Shop</a></li>
+                    <li><a href="angular-reviews.html"><i class="fab fa-angular"></i> Reviews</a></li>
+                    <li><a href="react-recommendations.html"><i class="fab fa-react"></i> For You</a></li>
+                    <!--<li><a href="#"><i class="fas fa-user"></i> Profile</a></li>-->
+                </ul>
+            </nav>
+            
+            <div class="user-section">
+                <span class="user-name" data-user-name>Welcome, Reader!</span>
+                <button class="btn-subscribe" id="subscribeBtn">Subscribe Now</button>
+                <button type="button" class="logout-btn" data-logout aria-label="Log out" title="Log out"><i class="fas fa-sign-out-alt"></i></button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="dashboard-main">
+        <div class="container">
+            <div class="dashboard-header">
+                <h2>Featured Cultural Books</h2>
+                <p>Discover timeless stories from our rich heritage</p>
+                <div class="search-bar">
+                    <input type="text" placeholder="Search books, authors, or categories...">
+                    <button><i class="fas fa-search"></i></button>
+                </div>
+            </div>
+            
+            <div class="books-grid">
+                <!-- Book 1 -->
+                <div class="book-card">
+                    <div class="book-cover">
+                        <!-- Replace with actual book cover image -->
+                        <img src="images/book1.jpg" alt="Ramayana Book Cover">
+                        <div class="book-badge">Popular</div>
+                    </div>
+                    <div class="book-info">
+                        <h3 class="book-title hindi-font">रामायण</h3>
+                        <h4 class="book-author">By Valmiki</h4>
+                        <p class="book-desc">The epic story of Lord Rama, his exile, and battle against Ravana.</p>
+                        <div class="book-meta">
+                            <span><i class="fas fa-clock"></i> 12 hrs</span>
+                            <span><i class="fas fa-star"></i> 4.8</span>
+                        </div>
+                        <button class="btn-read" onclick="window.location.href='reader.html'">Read Now</button>
+                    </div>
+                </div>
+                
+                <!-- Book 2 -->
+                <div class="book-card">
+                    <div class="book-cover">
+                        <!-- Replace with actual book cover image -->
+                        <img src="images/book2.jpg" alt="Mahabharata Book Cover">
+                        <div class="book-badge">Epic</div>
+                    </div>
+                    <div class="book-info">
+                        <h3 class="book-title hindi-font">महाभारत</h3>
+                        <h4 class="book-author">By Vyasa</h4>
+                        <p class="book-desc">The great epic of the Kurukshetra War and the fates of the Kaurava and Pandava princes.</p>
+                        <div class="book-meta">
+                            <span><i class="fas fa-clock"></i> 20 hrs</span>
+                            <span><i class="fas fa-star"></i> 4.9</span>
+                        </div>
+                        <button class="btn-read" onclick="window.location.href='reader.html'">Read Now</button>
+                    </div>
+                </div>
+                
+                <!-- Book 3 -->
+                <div class="book-card">
+                    <div class="book-cover">
+                        <!-- Replace with actual book cover image -->
+                        <img src="images/book3.jpg" alt="Gitanjali Book Cover">
+                        <div class="book-badge">Classic</div>
+                    </div>
+                    <div class="book-info">
+                        <h3 class="book-title hindi-font">गीतांजलि</h3>
+                        <h4 class="book-author">By Rabindranath Tagore</h4>
+                        <p class="book-desc">A collection of poems by the Nobel laureate that explores spiritual themes.</p>
+                        <div class="book-meta">
+                            <span><i class="fas fa-clock"></i> 6 hrs</span>
+                            <span><i class="fas fa-star"></i> 4.7</span>
+                        </div>
+                        <button class="btn-read" onclick="window.location.href='reader.html'">Read Now</button>
+                    </div>
+                </div>
+                
+                <!-- Book 4 (Locked - requires subscription) -->
+                <div class="book-card locked">
+                    <div class="book-cover">
+                        <!-- Replace with actual book cover image -->
+                        <img src="images/book4.jpg" alt="Vedas Book Cover">
+                        <div class="book-badge">Premium</div>
+                        <div class="lock-overlay">
+                            <i class="fas fa-lock"></i>
+                            <p>Subscribe to Unlock</p>
+                        </div>
+                    </div>
+                    <div class="book-info">
+                        <h3 class="book-title hindi-font">वेद</h3>
+                        <h4 class="book-author">Ancient Scriptures</h4>
+                        <p class="book-desc">The oldest sacred texts of Hinduism, containing hymns, philosophy, and guidance.</p>
+                        <div class="book-meta">
+                            <span><i class="fas fa-clock"></i> 30 hrs</span>
+                            <span><i class="fas fa-star"></i> 5.0</span>
+                        </div>
+                        <button class="btn-read locked" onclick="showSubscribeAlert()">Subscribe to Read</button>
+                    </div>
+                </div>
+
+ 		<!-- Book 5 (Locked - requires subscription) -->
+                <div class="book-card locked">
+                    <div class="book-cover">
+                        <!-- Replace with actual book cover image -->
+                        <img src="images/book5.jpg" alt="Vedas Book Cover">
+                        <div class="book-badge">Premium</div>
+                        <div class="lock-overlay">
+                            <i class="fas fa-lock"></i>
+                            <p>Subscribe to Unlock</p>
+                        </div>
+                    </div>
+                    <div class="book-info">
+                        <h3 class="book-title hindi-font">शिवचरित्र</h3>
+                        <h4 class="book-author">Sir Jadunath Sarkar</h4>
+                        <p class="book-desc">Shivcharitra is a compelling biography of Chhatrapati Shivaji Maharaj, detailing his life, achievements, and the foundation of the Maratha Empire.</p>
+                        <div class="book-meta">
+                            <span><i class="fas fa-clock"></i> 30 hrs</span>
+                            <span><i class="fas fa-star"></i> 5.0</span>
+                        </div>
+                        <button class="btn-read locked" onclick="showSubscribeAlert()">Subscribe to Read</button>
+                    </div>
+                </div>
+
+<!-- Book 6 (Locked - requires subscription) -->
+                <div class="book-card locked">
+                    <div class="book-cover">
+                        <!-- Replace with actual book cover image -->
+                        <img src="images/book6.jpg" alt="Vedas Book Cover">
+                        <div class="book-badge">Premium</div>
+                        <div class="lock-overlay">
+                            <i class="fas fa-lock"></i>
+                            <p>Subscribe to Unlock</p>
+                        </div>
+                    </div>
+                    <div class="book-info">
+                        <h3 class="book-title hindi-font"> दासबोध</h3>
+                        <h4 class="book-author">Kalyan Swami</h4>
+                        <p class="book-desc">Dasbodh is a seminal Marathi spiritual text composed by Samarth Ramdas, offering practical guidance for life and spiritual growth.</p>
+                        <div class="book-meta">
+                            <span><i class="fas fa-clock"></i> 30 hrs</span>
+                            <span><i class="fas fa-star"></i> 5.0</span>
+                        </div>
+                        <button class="btn-read locked" onclick="showSubscribeAlert()">Subscribe to Read</button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="categories">
+                <h3>Browse by Category</h3>
+                <div class="category-tags">
+                    <span class="category-tag">Epics</span>
+                    <span class="category-tag">Philosophy</span>
+                    <span class="category-tag">Poetry</span>
+                    <span class="category-tag">Mythology</span>
+                    <span class="category-tag">Spiritual</span>
+                    <span class="category-tag">Historical</span>
+                </div>
+            </div>
+            
+            <div class="reading-progress">
+                <h3>Your Reading Progress</h3>
+                <div class="progress-container">
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 65%"></div>
+                    </div>
+                    <p>You've read 12 of 20 free chapters this month</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4 class="hindi-font">प्रभात वचन</h4>
+                    <p>Preserving cultural literature for future generations through digital innovation.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="dashboard.html">Home</a></li>
+                        <li><a href="shop.html">Shop</a></li>
+                        <li><a href="angular-reviews.html">Reviews </a></li>
+                        <li><a href="react-recommendations.html">For You </a></li>
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Connect With Us</h4>
+                    <div class="social-links">
+                        <a href="https://www.facebook.com/login.php"><i class="fab fa-facebook"></i></a>
+                        <a href="https://x.com/?lang=en-in"><i class="fab fa-twitter"></i></a>
+                        <a href="https://www.instagram.com/#"><i class="fab fa-instagram"></i></a>
+                        <a href="https://www.youtube.com/"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>2026 Prabhat Vachan. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/script.js"></script>
+</body>
+</html>

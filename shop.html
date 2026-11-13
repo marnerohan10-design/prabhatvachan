@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Shop - Prabhat Vachan</title>
+    <link rel="icon" type="image/svg+xml" href="images/logo.svg">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Devanagari:wght@400;700&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body class="shop-page">
+    <!-- Header -->
+    <header class="shop-header">
+        <div class="container">
+            <div class="shop-nav">
+                <button class="btn-back" onclick="window.location.href='dashboard.html'">
+                    <i class="fas fa-arrow-left"></i> Back to Library
+                </button>
+                <div class="shop-title">
+                    <h2 class="hindi-font">पुस्तक की दुकान</h2>
+                    <p>Book Shop</p>
+                </div>
+                <div class="cart-section">
+                    <button class="cart-btn" id="cartBtn">
+                        <i class="fas fa-shopping-cart"></i>
+                        <span class="cart-count">3</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="shop-main">
+        <div class="container">
+            <div class="shop-hero">
+                <h1>Premium Physical Books</h1>
+                <p>Own a piece of cultural heritage with our beautifully crafted physical books. Subscribers get exclusive discounts!</p>
+                <div class="discount-banner">
+                    <i class="fas fa-tag"></i>
+                    <span>Subscribers get up to <strong>40% OFF</strong> on all books!</span>
+                </div>
+            </div>
+            
+            <div class="shop-filters">
+                <div class="filter-category">
+                    <h4>Categories:</h4>
+                    <div class="category-filters">
+                        <button class="filter-btn active">All</button>
+                        <button class="filter-btn">Epics</button>
+                        <button class="filter-btn">Philosophy</button>
+                        <button class="filter-btn">Poetry</button>
+                        <button class="filter-btn">Mythology</button>
+                    </div>
+                </div>
+                <div class="filter-sort">
+                    <label for="sortBy">Sort by:</label>
+                    <select id="sortBy">
+                        <option value="popular">Most Popular</option>
+                        <option value="new">Newest</option>
+                        <option value="price-low">Price: Low to High</option>
+                        <option value="price-high">Price: High to Low</option>
+                    </select>
+                </div>
+            </div>
+            
+            <div class="products-grid">
+                <!-- Product 1 -->
+                <div class="product-card">
+                    <div class="product-image">
+                        <!-- Replace with actual book image -->
+                        <img src="images/book1.jpg" alt="Ramayana Hardcover">
+                        <div class="product-badge">Bestseller</div>
+                        <div class="discount-badge" data-discount="30">30% OFF</div>
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-title hindi-font">रामायण </h3>
+                        <p class="product-author">Valmiki | Illustrated Edition</p>
+                        <p class="product-desc">Complete Ramayana with beautiful illustrations and detailed commentary. Premium quality paper and binding.</p>
+                        <div class="product-price">
+                            <span class="original-price">₹1,499</span>
+                            <span class="current-price">₹1,049</span>
+                            <span class="discount-note">Subscriber price: ₹899</span>
+                        </div>
+                        <div class="product-meta">
+                            <span><i class="fas fa-book"></i> 450 pages</span>
+                            <span><i class="fas fa-language"></i> Hindi</span>
+                            <span><i class="fas fa-star"></i> 4.8</span>
+                        </div>
+                        <div class="product-actions">
+                            <button class="btn-add-to-cart" data-product="ramayana">Add to Cart</button>
+                            <button class="btn-buy-now" data-product="ramayana">Buy Now</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Product 2 -->
+                <div class="product-card">
+                    <div class="product-image">
+                        <!-- Replace with actual book image -->
+                        <img src="images/book2.jpg" alt="Mahabharata Hardcover">
+                        <div class="discount-badge" data-discount="25">25% OFF</div>
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-title hindi-font">महाभारत</h3>
+                        <p class="product-author">Vyasa | Deluxe Edition</p>
+                        <p class="product-desc">Complete Mahabharata with character indexes and geographical maps. Gold-edged pages.</p>
+                        <div class="product-price">
+                            <span class="original-price">₹1,999</span>
+                            <span class="current-price">₹1,499</span>
+                            <span class="discount-note">Subscriber price: ₹1,199</span>
+                        </div>
+                        <div class="product-meta">
+                            <span><i class="fas fa-book"></i> 680 pages</span>
+                            <span><i class="fas fa-language"></i> Hindi</span>
+                            <span><i class="fas fa-star"></i> 4.9</span>
+                        </div>
+                        <div class="product-actions">
+                            <button class="btn-add-to-cart" data-product="mahabharata">Add to Cart</button>
+                            <button class="btn-buy-now" data-product="mahabharata">Buy Now</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Product 3 -->
+                <div class="product-card">
+                    <div class="product-image">
+                        <!-- Replace with actual book image -->
+                        <img src="images/book3.jpg" alt="Gitanjali Hardcover">
+                        <div class="discount-badge" data-discount="20">20% OFF</div>
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-title hindi-font">गीतांजलि</h3>
+                        <p class="product-author">Rabindranath Tagore | Bilingual</p>
+                        <p class="product-desc">Bilingual edition with Hindi and English translations side by side. Includes unpublished poems.</p>
+                        <div class="product-price">
+                            <span class="original-price">₹899</span>
+                            <span class="current-price">₹719</span>
+                            <span class="discount-note">Subscriber price: ₹539</span>
+                        </div>
+                        <div class="product-meta">
+                            <span><i class="fas fa-book"></i> 220 pages</span>
+                            <span><i class="fas fa-language"></i> Hindi/English</span>
+                            <span><i class="fas fa-star"></i> 4.7</span>
+                        </div>
+                        <div class="product-actions">
+                            <button class="btn-add-to-cart" data-product="gitanjali">Add to Cart</button>
+                            <button class="btn-buy-now" data-product="gitanjali">Buy Now</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Product 4 -->
+                <div class="product-card">
+                    <div class="product-image">
+                        <!-- Replace with actual book image -->
+                        <img src="images/book4.jpg" alt="Vedas Collection">
+                        <div class="product-badge">New</div>
+                        <div class="discount-badge" data-discount="40">40% OFF</div>
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-title hindi-font">वेद संग्रह (4 खंड)</h3>
+                        <p class="product-author">Ancient Scriptures | Collector's Edition</p>
+                        <p class="product-desc">Complete four Vedas with commentary by renowned scholars. Luxurious leather binding.</p>
+                        <div class="product-price">
+                            <span class="original-price">₹3,999</span>
+                            <span class="current-price">₹2,399</span>
+                            <span class="discount-note">Subscriber price: ₹1,999</span>
+                        </div>
+                        <div class="product-meta">
+                            <span><i class="fas fa-book"></i> 1200 pages</span>
+                            <span><i class="fas fa-language"></i> Sanskrit/Hindi</span>
+                            <span><i class="fas fa-star"></i> 5.0</span>
+                        </div>
+                        <div class="product-actions">
+                            <button class="btn-add-to-cart" data-product="vedas">Add to Cart</button>
+                            <button class="btn-buy-now" data-product="vedas">Buy Now</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="subscription-promo">
+                <div class="promo-content">
+                    <h3 class="hindi-font">ग्राहक बनें, और भी बचत करें!</h3>
+                    <h3>Subscribe and Save More!</h3>
+                    <p>Become a Prabhat Vachan subscriber today and get additional discounts on all physical books.</p>
+                    <div class="promo-benefits">
+                        <div class="promo-benefit">
+                            <i class="fas fa-percentage"></i>
+                            <p><strong>Extra 10-20% off</strong> on already discounted prices</p>
+                        </div>
+                        <div class="promo-benefit">
+                            <i class="fas fa-shipping-fast"></i>
+                            <p><strong>Free shipping</strong> on orders above ₹999</p>
+                        </div>
+                        <div class="promo-benefit">
+                            <i class="fas fa-gift"></i>
+                            <p><strong>Free bookmark</strong> and book cover with every order</p>
+                        </div>
+                    </div>
+                    <button class="btn-promo-subscribe" onclick="window.location.href='subscribe.html'">Subscribe Now</button>
+                </div>
+            </div>
+            
+            <div class="cart-sidebar" id="cartSidebar">
+                <div class="cart-header">
+                    <h3>Your Cart</h3>
+                    <button class="close-cart" id="closeCart">&times;</button>
+                </div>
+                <div class="cart-items">
+                    <div class="cart-item">
+                        <div class="cart-item-image">
+                            <!-- Replace with actual book image -->
+                            <div style="width: 60px; height: 80px; background-color: #e9d8a6;"></div>
+                        </div>
+                        <div class="cart-item-details">
+                            <h4 class="hindi-font">रामायण</h4>
+                            <p>Hardcover Edition</p>
+                            <div class="cart-item-price">
+                                <span>₹1,049</span>
+                                <span class="cart-item-discount">Subscriber: ₹899</span>
+                            </div>
+                        </div>
+                        <div class="cart-item-quantity">
+                            <button class="qty-btn">-</button>
+                            <span>1</span>
+                            <button class="qty-btn">+</button>
+                        </div>
+                        <button class="cart-item-remove"><i class="fas fa-trash"></i></button>
+                    </div>
+                </div>
+                <div class="cart-summary">
+                    <div class="summary-row">
+                        <span>Subtotal:</span>
+                        <span>₹2,548</span>
+                    </div>
+                    <div class="summary-row">
+                        <span>Shipping:</span>
+                        <span>₹99</span>
+                    </div>
+                    <div class="summary-row">
+                        <span>Discount:</span>
+                        <span class="discount-text">-₹300</span>
+                    </div>
+                    <div class="summary-row total">
+                        <span>Total:</span>
+                        <span>₹2,347</span>
+                    </div>
+                    <div class="summary-note">
+                        <p>Subscriber total: <strong>₹1,997</strong> (Save ₹350 more)</p>
+                    </div>
+                    <button class="btn-checkout">Proceed to Checkout</button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="shop-footer">
+        <div class="container">
+            <div class="shop-info">
+                <div class="info-card">
+                    <i class="fas fa-shipping-fast"></i>
+                    <h4>Free Shipping</h4>
+                    <p>On orders above ₹999</p>
+                </div>
+                <div class="info-card">
+                    <i class="fas fa-undo"></i>
+                    <h4>Easy Returns</h4>
+                    <p>30-day return policy</p>
+                </div>
+                <div class="info-card">
+                    <i class="fas fa-lock"></i>
+                    <h4>Secure Payment</h4>
+                    <p>100% secure transactions</p>
+                </div>
+                <div class="info-card">
+                    <i class="fas fa-headset"></i>
+                    <h4>Support</h4>
+                    <p>Dedicated customer care</p>
+                </div>
+            </div>
+            <p class="footer-note">Prices are inclusive of all taxes. International shipping available.</p>
+        </div>
+    </footer>
+
+    <script src="js/script.js"></script>
+</body>
+</html>

@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Character Story - Prabhat Vachan</title>
+    <link rel="icon" type="image/svg+xml" href="images/logo.svg">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Devanagari:wght@400;700&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body class="character-page">
+    <!-- Header -->
+    <header class="character-header">
+        <div class="container">
+            <div class="character-nav">
+                <button class="btn-back" onclick="window.history.back()">
+                    <i class="fas fa-arrow-left"></i> Back to Reading
+                </button>
+                <h2 class="hindi-font">Character Story</h2>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="character-main">
+        <div class="container">
+            <div class="character-profile">
+                <div class="character-image">
+                    <!-- Replace with actual character image -->
+                    <img src="images/character1.jpg" alt="Lord Rama" id="characterImg">
+                    <div class="character-badge">Main Character</div>
+                </div>
+                <div class="character-details">
+                    <h1 class="hindi-font" id="characterName">राम</h1>
+                    <h3 id="characterTitle">Lord Rama, The Ideal Man</h3>
+                    <div class="character-meta">
+                        <span><i class="fas fa-book"></i> <strong>Source:</strong> <span id="characterSource">Ramayana</span></span>
+                        <span><i class="fas fa-user-friends"></i> <strong>Family:</strong> <span id="characterFamily">Son of Dasharatha and Kaushalya</span></span>
+                    </div>
+                    
+                    <div class="character-bio">
+                        <h4>Biography</h4>
+                        <p id="characterBio">Lord Rama is the seventh avatar of the Hindu god Vishnu and the central figure of the Ramayana. He is considered the ideal man (Maryada Purushottam) and exemplifies righteousness, duty, honor, and compassion.</p>
+                        
+                        <h4>Key Stories</h4>
+                        <ul id="characterStories">
+                            <li>Birth and childhood in Ayodhya</li>
+                            <li>Marriage to Sita by breaking Shiva's bow</li>
+                            <li>14-year exile to the forest</li>
+                            <li>Abduction of Sita by Ravana</li>
+                            <li>Building alliance with Sugriva and Hanuman</li>
+                            <li>Battle of Lanka and defeat of Ravana</li>
+                            <li>Return to Ayodhya and coronation</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="character-video">
+                <h3 class="hindi-font">Character Story Video</h3>
+                <div class="video-player">
+                    <!-- Video placeholder - in real implementation, embed actual video -->
+                    <div class="video-container">
+                        <div class="video-placeholder-large">
+                            <i class="fas fa-play-circle"></i>
+                            <p>Character Story Video Playing</p>
+                            <p class="video-time">12:45 / 25:30</p>
+                        </div>
+                    </div>
+                    <div class="video-controls-large">
+                        <button><i class="fas fa-backward"></i></button>
+                        <button id="videoPlayPause"><i class="fas fa-play"></i></button>
+                        <button><i class="fas fa-forward"></i></button>
+                        <div class="video-progress">
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 50%"></div>
+                            </div>
+                        </div>
+                        <div class="volume-control">
+                            <i class="fas fa-volume-up"></i>
+                            <input type="range" min="0" max="100" value="80">
+                        </div>
+                        <button><i class="fas fa-expand"></i></button>
+                    </div>
+                </div>
+                <div class="video-info">
+                    <p><strong>Title:</strong> <span id="videoTitle">The Life of Lord Rama - Complete Story</span></p>
+                    <p><strong>Duration:</strong> 25 minutes | <strong>Language:</strong> Hindi with English subtitles</p>
+                    <p><strong>Description:</strong> This video explores the complete life journey of Lord Rama, from his birth in Ayodhya to his victory over Ravana and return to his kingdom.</p>
+                </div>
+            </div>
+            
+            <div class="related-characters">
+                <h4>Related Characters</h4>
+                <div class="character-grid">
+                    <div class="related-character" onclick="changeCharacter('sita')">
+                        <!-- Replace with actual character image -->
+                        <div class="related-character-img" style="background-color: #f8d7da;"></div>
+                        <h5 class="hindi-font">सीता</h5>
+                        <p>Wife of Rama</p>
+                    </div>
+                    <div class="related-character" onclick="changeCharacter('lakshman')">
+                        <!-- Replace with actual character image -->
+                        <div class="related-character-img" style="background-color: #d1ecf1;"></div>
+                        <h5 class="hindi-font">लक्ष्मण</h5>
+                        <p>Brother of Rama</p>
+                    </div>
+                    <div class="related-character" onclick="changeCharacter('hanuman')">
+                        <!-- Replace with actual character image -->
+                        <div class="related-character-img" style="background-color: #fff3cd;"></div>
+                        <h5 class="hindi-font">हनुमान</h5>
+                        <p>Devotee of Rama</p>
+                    </div>
+                    <div class="related-character" onclick="changeCharacter('ravana')">
+                        <!-- Replace with actual character image -->
+                        <div class="related-character-img" style="background-color: #d4edda;"></div>
+                        <h5 class="hindi-font">रावण</h5>
+                        <p>Antagonist</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="character-footer">
+        <div class="container">
+            <p>Explore more character stories in our premium collection. <a href="subscribe.html">Subscribe now</a> for full access.</p>
+        </div>
+    </footer>
+
+    <script src="js/script.js"></script>
+</body>
+</html>

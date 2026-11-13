@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prabhat Vachan - Book Reader</title>
+    <link rel="icon" type="image/svg+xml" href="images/logo.svg">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Devanagari:wght@400;700&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body class="reader-page">
+    <!-- Reader Header -->
+    <header class="reader-header">
+        <div class="container">
+            <div class="reader-nav">
+                <button class="btn-back" onclick="window.location.href='dashboard.html'">
+                    <i class="fas fa-arrow-left"></i> Back to Library
+                </button>
+                <div class="reader-title">
+                    <h2 class="hindi-font">रामायण</h2>
+                    <p>By Valmiki • Chapter 1: बालकाण्ड</p>
+                </div>
+                <div class="reader-tools">
+                    <button id="fontIncrease"><i class="fas fa-text-height"></i></button>
+                    <button id="fontDecrease"><i class="fas fa-text-width"></i></button>
+                    <button id="darkModeToggle"><i class="fas fa-moon"></i></button>
+                    <button id="bookmarkBtn"><i class="far fa-bookmark"></i></button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Reader Content -->
+    <main class="reader-main">
+        <div class="container">
+            <div class="reader-options">
+                <h3>Choose Reading Mode:</h3>
+                <div class="mode-buttons">
+                    <button class="mode-btn active" id="readSelfBtn">
+                        <i class="fas fa-book-reader"></i>
+                        <span>Read Yourself</span>
+                    </button>
+                    <button class="mode-btn" id="autoReadBtn">
+                        <i class="fas fa-play-circle"></i>
+                        <span>Auto Read</span>
+                    </button>
+                </div>
+            </div>
+            
+            <div class="reading-area">
+                <div class="book-content" id="bookContent">
+                    <h3 class="chapter-title hindi-font">बालकाण्ड - अयोध्या काण्ड</h3>
+                    
+                    <p>अयोध्या नगरी में राजा दशरथ राज्य करते थे। उनकी तीन रानियाँ थीं - कौशल्या, सुमित्रा और कैकेयी। राजा दशरथ के कोई संतान नहीं थी, इसलिए उन्होंने पुत्रेष्टि यज्ञ करवाया।</p>
+                    
+                    <p>यज्ञ के बाद, देवता ने प्रसाद रूप में खीर दी, जिसे तीनों रानियों ने ग्रहण किया। समय आने पर कौशल्या ने <span class="character-name" data-character="rama" onclick="openCharacter('rama')">राम</span> को जन्म दिया, कैकेयी ने <span class="character-name" data-character="bharat" onclick="openCharacter('bharat')">भरत</span> को, और सुमित्रा ने <span class="character-name" data-character="lakshman" onclick="openCharacter('lakshman')">लक्ष्मण</span> और <span class="character-name" data-character="shatrughna" onclick="openCharacter('shatrughna')">शत्रुघ्न</span> को जन्म दिया।</p>
+                    
+                    <p>चारों भाई अत्यंत प्रतिभाशाली और गुणवान थे। <span class="character-name" data-character="rama" onclick="openCharacter('rama')">राम</span> सबसे बड़े थे और सभी को प्रिय थे। विश्वामित्र ऋषि ने जब यज्ञ की रक्षा के लिए <span class="character-name" data-character="rama" onclick="openCharacter('rama')">राम</span> और <span class="character-name" data-character="lakshman" onclick="openCharacter('lakshman')">लक्ष्मण</span> को माँगा, तो राजा दशरथ ने अनिच्छा से स्वीकार किया।</p>
+                    
+                    <p>वन में विश्वामित्र के यज्ञ की रक्षा करते हुए, <span class="character-name" data-character="rama" onclick="openCharacter('rama')">राम</span> ने ताड़का राक्षसी का वध किया और अहिल्या का उद्धार किया। मिथिला नगरी में जनक के यज्ञ में, <span class="character-name" data-character="rama" onclick="openCharacter('rama')">राम</span> ने शिव धनुष तोड़कर <span class="character-name" data-character="sita" onclick="openCharacter('sita')">सीता</span> से विवाह किया।</p>
+                    
+                    <p>अयोध्या लौटने पर, राजा दशरथ ने <span class="character-name" data-character="rama" onclick="openCharacter('rama')">राम</span> को युवराज घोषित करने का निर्णय लिया। लेकिन मंथरा नामक दासी के बहकावे में आकर, कैकेयी ने दशरथ से दो वरदान माँगे - <span class="character-name" data-character="bharat" onclick="openCharacter('bharat')">भरत</span> के लिए राज्य और <span class="character-name" data-character="rama" onclick="openCharacter('rama')">राम</span> के लिए चौदह वर्ष का वनवास।</p>
+                    
+                    <p>पिता के वचन की रक्षा के लिए, <span class="character-name" data-character="rama" onclick="openCharacter('rama')">राम</span> ने खुशी से वनवास स्वीकार किया। <span class="character-name" data-character="sita" onclick="openCharacter('sita')">सीता</span> और <span class="character-name" data-character="lakshman" onclick="openCharacter('lakshman')">लक्ष्मण</span> ने भी उनके साथ जाने का निर्णय लिया। इस प्रकार तीनों वन के लिए प्रस्थान कर गए।</p>
+                    
+                    <p>राजा दशरथ <span class="character-name" data-character="rama" onclick="openCharacter('rama')">राम</span> के वियोग में शोकाकुल होकर स्वर्ग सिधार गए। जब <span class="character-name" data-character="bharat" onclick="openCharacter('bharat')">भरत</span> को यह सब पता चला, तो वे अत्यंत दुखी हुए और माता कैकेयी को कोसने लगे।</p>
+                </div>
+                
+                <!-- Auto-read video player (hidden by default) -->
+                <div class="auto-read-player" id="autoReadPlayer">
+                    <div class="player-header">
+                        <h4><i class="fas fa-play-circle"></i> Auto-Reading in Progress</h4>
+                        <button id="stopAutoRead"><i class="fas fa-stop"></i> Stop</button>
+                    </div>
+                    <div class="video-placeholder">
+                        <!-- In a real implementation, this would be a video player -->
+                        <div class="video-screen">
+                            <i class="fas fa-play"></i>
+                            <p>Narration Video Playing</p>
+                        </div>
+                        <div class="video-controls">
+                            <button><i class="fas fa-backward"></i></button>
+                            <button id="playPauseBtn"><i class="fas fa-pause"></i></button>
+                            <button><i class="fas fa-forward"></i></button>
+                            <div class="volume-control">
+                                <i class="fas fa-volume-up"></i>
+                                <input type="range" min="0" max="100" value="80">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="video-info">
+                        <p>Currently reading: <strong>Chapter 1 - बालकाण्ड</strong></p>
+                        <p>Narrated by: <strong>Dr. Hari Prasad</strong></p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="reader-controls">
+                <button class="btn-chapter prev-chapter">
+                    <i class="fas fa-chevron-left"></i> Previous Chapter
+                </button>
+                <div class="chapter-progress">
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 30%"></div>
+                    </div>
+                    <p>Chapter 1 of 7</p>
+                </div>
+                <button class="btn-chapter next-chapter">
+                    Next Chapter <i class="fas fa-chevron-right"></i>
+                </button>
+            </div>
+            
+            <div class="character-list">
+                <h4>Characters in this Chapter:</h4>
+                <div class="character-tags">
+                    <span class="character-tag" onclick="openCharacter('rama')">राम</span>
+                    <span class="character-tag" onclick="openCharacter('sita')">सीता</span>
+                    <span class="character-tag" onclick="openCharacter('lakshman')">लक्ष्मण</span>
+                    <span class="character-tag" onclick="openCharacter('bharat')">भरत</span>
+                    <span class="character-tag" onclick="openCharacter('dasharath')">दशरथ</span>
+                    <span class="character-tag" onclick="openCharacter('kaikeyi')">कैकेयी</span>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="reader-footer">
+        <div class="container">
+            <p>You have read 8 of 20 free chapters this month. <a href="#" onclick="showSubscribeAlert()">Subscribe</a> for unlimited access.</p>
+        </div>
+    </footer>
+
+    <script src="js/script.js"></script>
+</body>
+</html>

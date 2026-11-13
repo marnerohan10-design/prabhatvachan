@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Subscribe - Prabhat Vachan</title>
+    <link rel="icon" type="image/svg+xml" href="images/logo.svg">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Devanagari:wght@400;700&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body class="subscribe-page">
+    <!-- Header -->
+    <header class="subscribe-header">
+        <div class="container">
+            <div class="subscribe-nav">
+                <button class="btn-back" onclick="window.location.href='dashboard.html'">
+                    <i class="fas fa-arrow-left"></i> Back to Library
+                </button>
+                <h2 class="hindi-font">Unlock Premium Features</h2>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="subscribe-main">
+        <div class="container">
+            <div class="subscribe-hero">
+                <h1>Your Free Limit Has Been Reached</h1>
+                <p class="hindi-font">अब आपने अपनी मुफ्त सीमा पार कर ली है</p>
+                <p>You've read 20 out of 20 free chapters this month. Subscribe to continue your literary journey with unlimited access.</p>
+            </div>
+            
+            <div class="benefits-section">
+                <h3>With Premium Subscription, You Get:</h3>
+                <div class="benefits-grid">
+                    <div class="benefit-card">
+                        <i class="fas fa-book-open"></i>
+                        <h4>Unlimited Reading</h4>
+                        <p>Access all books and chapters without any restrictions</p>
+                    </div>
+                    <div class="benefit-card">
+                        <i class="fas fa-video"></i>
+                        <h4>Premium Videos</h4>
+                        <p>Exclusive character story videos and narrated content</p>
+                    </div>
+                    <div class="benefit-card">
+                        <i class="fas fa-shopping-bag"></i>
+                        <h4>Book Discounts</h4>
+                        <p>Up to 40% discount on all physical books in our shop</p>
+                    </div>
+                    <div class="benefit-card">
+                        <i class="fas fa-download"></i>
+                        <h4>Offline Access</h4>
+                        <p>Download books and read them offline anytime</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="pricing-section">
+                <h3>Choose Your Plan</h3>
+                <div class="pricing-cards">
+                    <!-- Monthly Plan -->
+                    <div class="pricing-card">
+                        <div class="pricing-header">
+                            <h4>Monthly</h4>
+                            <div class="price">
+                                <span class="currency">₹</span>
+                                <span class="amount">299</span>
+                                <span class="period">/month</span>
+                            </div>
+                            <p class="price-note">Billed monthly</p>
+                        </div>
+                        <div class="pricing-features">
+                            <ul>
+                                <li><i class="fas fa-check"></i> Unlimited book access</li>
+                                <li><i class="fas fa-check"></i> Character story videos</li>
+                                <li><i class="fas fa-check"></i> 20% book discounts</li>
+                                <li><i class="fas fa-check"></i> Offline reading (5 books)</li>
+                                <li><i class="fas fa-times"></i> Priority support</li>
+                            </ul>
+                        </div>
+                        <button class="btn-subscribe-plan" data-plan="monthly">Choose Monthly Plan</button>
+                    </div>
+                    
+                    <!-- Yearly Plan (Recommended) -->
+                    <div class="pricing-card featured">
+                        <div class="plan-badge">Most Popular</div>
+                        <div class="pricing-header">
+                            <h4>Yearly</h4>
+                            <div class="price">
+                                <span class="currency">₹</span>
+                                <span class="amount">2,999</span>
+                                <span class="period">/year</span>
+                            </div>
+                            <p class="price-note">Save ₹589 compared to monthly</p>
+                        </div>
+                        <div class="pricing-features">
+                            <ul>
+                                <li><i class="fas fa-check"></i> Everything in Monthly</li>
+                                <li><i class="fas fa-check"></i> 40% book discounts</li>
+                                <li><i class="fas fa-check"></i> Offline reading (unlimited)</li>
+                                <li><i class="fas fa-check"></i> Priority customer support</li>
+                                <li><i class="fas fa-check"></i> Early access to new books</li>
+                            </ul>
+                        </div>
+                        <button class="btn-subscribe-plan" data-plan="yearly">Choose Yearly Plan</button>
+                    </div>
+                    
+                    <!-- Family Plan -->
+                    <div class="pricing-card">
+                        <div class="pricing-header">
+                            <h4>Family</h4>
+                            <div class="price">
+                                <span class="currency">₹</span>
+                                <span class="amount">4,999</span>
+                                <span class="period">/year</span>
+                            </div>
+                            <p class="price-note">For up to 4 family members</p>
+                        </div>
+                        <div class="pricing-features">
+                            <ul>
+                                <li><i class="fas fa-check"></i> Everything in Yearly</li>
+                                <li><i class="fas fa-check"></i> 4 separate accounts</li>
+                                <li><i class="fas fa-check"></i> Individual reading progress</li>
+                                <li><i class="fas fa-check"></i> Family reading statistics</li>
+                                <li><i class="fas fa-check"></i> 50% book discounts</li>
+                            </ul>
+                        </div>
+                        <button class="btn-subscribe-plan" data-plan="family">Choose Family Plan</button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="payment-section">
+                <h3>Payment Information</h3>
+                <div class="payment-form">
+                    <div class="payment-methods">
+                        <h4>Select Payment Method</h4>
+                        <div class="method-options">
+                            <label class="method-option active">
+                                <input type="radio" name="payment" value="card" checked>
+                                <i class="fas fa-credit-card"></i>
+                                <span>Credit/Debit Card</span>
+                            </label>
+                            <label class="method-option">
+                                <input type="radio" name="payment" value="upi">
+                                <i class="fas fa-mobile-alt"></i>
+                                <span>UPI</span>
+                            </label>
+                            <label class="method-option">
+                                <input type="radio" name="payment" value="netbanking">
+                                <i class="fas fa-university"></i>
+                                <span>Net Banking</span>
+                            </label>
+                            <label class="method-option">
+                                <input type="radio" name="payment" value="wallet">
+                                <i class="fas fa-wallet"></i>
+                                <span>Wallet</span>
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <div class="card-details" id="cardDetails">
+                        <h4>Card Details</h4>
+                        <div class="form-group">
+                            <label for="cardNumber">Card Number</label>
+                            <input type="text" id="cardNumber" placeholder="1234 5678 9012 3456" maxlength="19">
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="expiryDate">Expiry Date</label>
+                                <input type="text" id="expiryDate" placeholder="MM/YY" maxlength="5">
+                            </div>
+                            <div class="form-group">
+                                <label for="cvv">CVV</label>
+                                <input type="text" id="cvv" placeholder="123" maxlength="3">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="cardName">Name on Card</label>
+                            <input type="text" id="cardName" placeholder="Rohan Marne">
+                        </div>
+                    </div>
+                    
+                                        
+                    <button class="btn-complete-payment" id="completePayment">Complete Subscription</button>
+                    
+                    <div class="payment-note">
+                        <p>By subscribing, you agree to our <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a>. You can cancel your subscription anytime.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="subscribe-footer">
+        <div class="container">
+            <p>Need help choosing a plan? <a href="#">Contact our support team</a> or call us at +91-XXXXXX-XXXX</p>
+        </div>
+    </footer>
+
+    <script src="js/script.js"></script>
+</body>
+</html>
