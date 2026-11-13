@@ -122,12 +122,21 @@ const authenticatedPages = new Set([
 ]);
 let csrfToken = '';
 
+async function readAuthResponse(response) {
+    const contentType = response.headers.get('content-type') || '';
+    if (!contentType.toLowerCase().includes('application/json')) {
+        await response.text();
+        throw new Error('The authentication API did not return JSON. Run "npm start" and open http://localhost:3000 instead of opening the HTML file or using a static preview.');
+    }
+    return response.json();
+}
+
 async function loadAuthState() {
     const response = await fetch('/api/auth/me', {
         credentials: 'same-origin',
         headers: { Accept: 'application/json' }
     });
-    const result = await response.json();
+    const result = await readAuthResponse(response);
     if (!response.ok || typeof result.csrfToken !== 'string') {
         throw new Error(result.error || 'Unable to verify your account session.');
     }
@@ -145,7 +154,7 @@ async function submitAuthRequest(endpoint, payload) {
         },
         body: JSON.stringify(payload)
     });
-    const result = await response.json();
+    const result = await readAuthResponse(response);
     if (!response.ok) {
         throw new Error(result.error || 'Authentication request failed.');
     }
@@ -283,7 +292,7 @@ function initSessionAwareHeader() {
                 headers: { 'X-CSRF-Token': csrfToken }
             });
             if (!response.ok) {
-                const result = await response.json();
+                const result = await readAuthResponse(response);
                 throw new Error(result.error || 'Unable to sign out.');
             }
             window.location.replace('/index.html');
